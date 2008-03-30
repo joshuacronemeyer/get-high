@@ -1,5 +1,5 @@
 module PhysicalObject
-  
+
   def zero_vector()
     CP::Vec2.new(0,0)
   end
@@ -14,17 +14,20 @@ module PhysicalObject
     @space.add_shape(@shape)
   end
 
-  def draw_polygon
+  def draw_polygon(offset_x=0, offset_y=0)
     #this method is great to throw in your draw method
     #when you are trying to see what is going on with collisions
     #or if you just want to use polygons.
     #Beware the performance hit for drawing lots of polygons.
+    #Also, it doesn't work if you aren't locked to the physical position in some way.
     @bounds.each_cons(2) do |pair| 
       a = @shape.body.local2world(pair.first)
       b = @shape.body.local2world(pair[1])
-      @window.draw_line(a.x, a.y, 0xFFFFFFFF, b.x, b.y, 0xFFFFFFFF, z=0, mode=:default)
+      @window.draw_line(a.x+offset_x, a.y+offset_y, 0xFFFFFFFF, b.x+offset_x, b.y+offset_y, 0xFFFFFFFF, z=0, mode=:default)
     end
-    @window.draw_line(@shape.body.local2world(@bounds.last).x, @shape.body.local2world(@bounds.last).y, 
-                      0xFFFFFFFF, @shape.body.local2world(@bounds.first).x, @shape.body.local2world(@bounds.first).y, 0xFFFFFFFF, z=0, mode=:default)
+    a = @shape.body.local2world(@bounds.last)
+    b = @shape.body.local2world(@bounds.first)
+    @window.draw_line(a.x+offset_x, a.y+offset_y, 0xFFFFFFFF, b.x+offset_x, b.y+offset_y, 0xFFFFFFFF, z=0, mode=:default)
   end
+
 end
