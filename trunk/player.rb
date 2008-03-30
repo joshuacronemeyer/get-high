@@ -5,15 +5,23 @@ include PhysicalObject
 class Player
   MASS = 10.0
   COLLISION_TAG = :ship
-  
+
   def initialize(window, space)
     @image = Image.new(window, "media/Starfighter.bmp", true)
     @window = window
     @space = space
     @bounds = [CP::Vec2.new(-25.0, -25.0), CP::Vec2.new(-25.0, 25.0), CP::Vec2.new(25.0, 1.0), CP::Vec2.new(25.0, -1.0)]
-    create_pyhsical_object(150, 150, MASS, COLLISION_TAG)
+    create_pyhsical_object(320, 240, MASS, COLLISION_TAG)
   end
-  
+
+  def x
+    @shape.body.p.x
+  end
+
+  def y
+    @shape.body.p.y
+  end
+
   def turn_left
     @shape.body.t -= 10000.0
   end
@@ -28,7 +36,6 @@ class Player
 
   def draw()
     @shape.body.reset_forces
-    #draw_polygon
-    @image.draw_rot(@shape.body.p.x, @shape.body.p.y, 0, @shape.body.a.radians_to_gosu)
+    @image.draw_rot(Game::X_RES/2.0, Game::Y_RES/2.0, 0, @shape.body.a.radians_to_gosu)
   end
 end

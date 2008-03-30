@@ -9,16 +9,16 @@ include Gosu
 class Game < Window
   PHYSICS_TIME_DELTA = 1.0/20.0
   VISCOUS_DAMPING = 0.3
-  attr_reader :map
+  X_RES = 640
+  Y_RES = 480
 
   def initialize
-    super(640, 480, false)
+    super(X_RES, Y_RES, false)
     self.caption = "get high"
     @space = CP::Space.new
     @space.damping = VISCOUS_DAMPING   
     @player = Player.new(self, @space)
     @map = Map.new(self, @space, "media/map.txt")
-    @screen_x = @screen_y = 0
   end
   
   def update
@@ -36,8 +36,8 @@ class Game < Window
   end
   
   def draw
-    @map.draw @screen_x, @screen_y
-    @player.draw()
+    @map.draw @player.x, @player.y
+    @player.draw
   end
   
   def button_down(id)
