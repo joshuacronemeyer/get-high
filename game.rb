@@ -4,11 +4,13 @@ require 'chipmunk'
 require 'map'
 require 'tile'
 require 'player'
+require 'mouse_pointer'
+require 'particle'
 include Gosu
 
 class Game < Window
   PHYSICS_TIME_DELTA = 1.0/20.0
-  VISCOUS_DAMPING = 0.3
+  VISCOUS_DAMPING = 0.4
   X_RES = 640
   Y_RES = 480
 
@@ -19,9 +21,17 @@ class Game < Window
     @space.damping = VISCOUS_DAMPING   
     @player = Player.new(self, @space)
     @map = Map.new(self, @space, "media/map.txt")
-  end
+    @pointer = MousePointer.new(self)
+    @particle_image = Image.new(self, "media/red_particle.png", true)
+    @particles = []
+end
   
   def update
+    if button_down? Gosu::Button::MsLeft
+      x = mouse_x + @player.x - (Game::X_RES/2.0)
+      y = mouse_y + @player.y - (Game::Y_RES/2.0)
+      @particles << Particle.new(self,@space,x,y) 
+    end
     if button_down? Gosu::Button::KbLeft
       @player.turn_left
     end
@@ -38,6 +48,8 @@ class Game < Window
   def draw
     @map.draw @player.x, @player.y
     @player.draw
+    @pointer.draw
+    @particles.each{|particle| particle.draw(@player.x, @player.y, @particle_image)}
   end
   
   def button_down(id)

@@ -11,7 +11,7 @@ class Player
     @window = window
     @space = space
     @bounds = [CP::Vec2.new(-25.0, -25.0), CP::Vec2.new(-25.0, 25.0), CP::Vec2.new(25.0, 1.0), CP::Vec2.new(25.0, -1.0)]
-    create_pyhsical_object(320, 240, MASS, COLLISION_TAG)
+    create_pyhsical_object(Game::X_RES/2.0, Game::Y_RES/2.0, MASS, COLLISION_TAG)
   end
 
   def x
@@ -23,11 +23,11 @@ class Player
   end
 
   def turn_left
-    @shape.body.t -= 10000.0
+    @shape.body.t -= 9000.0
   end
 
   def turn_right
-    @shape.body.t += 10000.0
+    @shape.body.t += 9000.0
   end
 
   def accelerate
