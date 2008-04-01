@@ -14,9 +14,23 @@ class Particle
   end
 
   def draw(screen_x, screen_y, image)
+    @shape.body.reset_forces
     x_offset = -screen_x + (Game::X_RES/2.0)
     y_offset = -screen_y + (Game::Y_RES/2.0)
     image.draw_rot(@shape.body.p.x + x_offset, @shape.body.p.y + y_offset, 0, @shape.body.a.radians_to_gosu)
     #draw_polygon(x_offset, y_offset)
+  end
+
+  def launch(vector)
+    @shape.body.apply_force(vector, zero_vector)
+  end
+
+  def destroy
+    @space.remove_body(@shape.body)
+    @space.remove_shape(@shape)
+  end
+
+  def non_interactive!
+    @shape.group=1
   end
 end
