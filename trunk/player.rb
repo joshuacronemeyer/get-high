@@ -31,7 +31,7 @@ class Player
   end
 
   def accelerate
-    @shape.body.apply_force((@shape.body.a.radians_to_vec2 * (3000.0)), CP::Vec2.new(0.0, 0.0))
+    @shape.body.apply_force((@shape.body.a.radians_to_vec2 * (3000.0)), zero_vector)
   end
 
   def draw()

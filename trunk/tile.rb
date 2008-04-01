@@ -7,7 +7,7 @@ class Tile
   GRASS = 0
   EARTH = 1
   COLLISION_TAG = :tile
-  MASS = 1.0/0.0
+  MASS = 50#1.0/0.0
 
   def initialize(window, space, x, y, type)
     @window = window
