@@ -1,10 +1,10 @@
 #summary List of features for first release.
 
-= To Be Implemented =
-
-Add your content here.  Format your content with:
+= Implemented =
   * Screen scrolls with player
   * Map editable via text editor
+
+= To Be Implemented =
   * Rising Balloon is player
   * Mouse click creates outwardly radial force
   * Spike obstacles destroy balloon
