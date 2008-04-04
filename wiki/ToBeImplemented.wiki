@@ -5,6 +5,7 @@
   * Map editable via text editor
 
 = To Be Implemented =
+  * 's' on the map places your player
   * Rising Balloon is player
   * Mouse click creates outwardly radial force
   * Spike obstacles destroy balloon
