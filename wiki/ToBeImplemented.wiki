@@ -10,3 +10,4 @@
   * Rising Balloon is player
   * Spike obstacles destroy balloon
   * Top of map is goal
+  * Rotating mac or macpro, rotates map allowing you to navigate the balloon through the map.
