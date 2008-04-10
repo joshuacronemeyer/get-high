@@ -1,5 +1,6 @@
 require 'numeric'
 require 'physical_object'
+require 'map_reader'
 include PhysicalObject
 
 class Player
@@ -11,7 +12,9 @@ class Player
     @window = window
     @space = space
     @bounds = [CP::Vec2.new(-25.0, -25.0), CP::Vec2.new(-25.0, 25.0), CP::Vec2.new(25.0, 1.0), CP::Vec2.new(25.0, -1.0)]
-    create_pyhsical_object(Game::X_RES/2.0, Game::Y_RES/2.0, MASS, COLLISION_TAG)
+    #create_pyhsical_object(Game::X_RES/2.0, Game::Y_RES/2.0, MASS, COLLISION_TAG)
+    vec = determine_initial_position
+    create_pyhsical_object(vec.first, vec.last, MASS, COLLISION_TAG)
   end
 
   def x
@@ -37,5 +40,22 @@ class Player
   def draw()
     @shape.body.reset_forces
     @image.draw_rot(Game::X_RES/2.0, Game::Y_RES/2.0, 0, @shape.body.a.radians_to_gosu)
+  end
+
+  def determine_initial_position
+    reader = MapReader.new("media/map.txt")
+    map = reader.mapping_from_map_file do |char, x, y|
+      if char.upcase == 'S'
+        [x*60, y*60]
+      else
+        nil 
+      end
+    end
+    
+    map.each do |row|
+      row.each do |element|
+        return element if element
+      end
+    end
   end
 end
