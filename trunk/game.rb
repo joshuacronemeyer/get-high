@@ -31,7 +31,6 @@ end
     if button_down? Gosu::Button::MsLeft
       x = mouse_x + @player.x - (Game::X_RES/2.0)
       y = mouse_y + @player.y - (Game::Y_RES/2.0)
-      #@particles << Particle.new(self,@space,x,y)
       @explosion.cleanup if @explosion
       @explosion = Explosion.new(self,@space,x,y)
     end
@@ -52,7 +51,6 @@ end
     @map.draw @player.x, @player.y
     @player.draw
     @pointer.draw
-    #@particles.each{|particle| particle.draw(@player.x, @player.y, @particle_image)}
     @explosion.draw(@player.x, @player.y, @particle_image) if @explosion
   end
   
