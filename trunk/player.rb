@@ -12,9 +12,8 @@ class Player
     @window = window
     @space = space
     @bounds = [CP::Vec2.new(-25.0, -25.0), CP::Vec2.new(-25.0, 25.0), CP::Vec2.new(25.0, 1.0), CP::Vec2.new(25.0, -1.0)]
-    #create_pyhsical_object(Game::X_RES/2.0, Game::Y_RES/2.0, MASS, COLLISION_TAG)
-    vec = determine_initial_position
-    create_pyhsical_object(vec.first, vec.last, MASS, COLLISION_TAG)
+    start_position = determine_initial_position
+    create_pyhsical_object(start_position.first, start_position.last, MASS, COLLISION_TAG)
   end
 
   def x
