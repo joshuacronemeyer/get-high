@@ -11,7 +11,8 @@ include Gosu
 
 class Game < Window
   PHYSICS_TIME_DELTA = 1.0/20.0
-  VISCOUS_DAMPING = 0.4
+  VISCOUS_DAMPING = 0.7
+  GRAVITY = 50
   X_RES = 640
   Y_RES = 480
 
@@ -19,8 +20,9 @@ class Game < Window
     super(X_RES, Y_RES, false)
     self.caption = "get high"
     @space = CP::Space.new
-    @space.damping = VISCOUS_DAMPING   
-    @player = Player.new(self, @space)
+    @space.damping = VISCOUS_DAMPING
+    @space.gravity = CP::Vec2.new(0,GRAVITY)
+    @player = Player.new(self, @space, CP::Vec2.new(0,-GRAVITY - 20))
     @map = Map.new(self, @space, "media/map.txt")
     @pointer = MousePointer.new(self)
     @particle_image = Image.new(self, "media/red_particle.png", true)
@@ -33,16 +35,6 @@ end
       y = mouse_y + @player.y - (Game::Y_RES/2.0)
       @explosion.cleanup if @explosion
       @explosion = Explosion.new(self,@space,x,y)
-    end
-    if button_down? Gosu::Button::KbLeft
-      @player.turn_left
-    end
-    if button_down? Gosu::Button::KbRight
-      @player.turn_right
-    end
-
-    if button_down? Gosu::Button::KbUp
-      @player.accelerate
     end
     @space.step(PHYSICS_TIME_DELTA)
   end

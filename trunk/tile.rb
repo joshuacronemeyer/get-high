@@ -10,6 +10,7 @@ class Tile
   MASS = 1.0/0.0
 
   def initialize(window, space, x, y, type)
+    @fixed = true
     @window = window
     @space = space
     @type = GRASS if type == 'G'
@@ -25,5 +26,13 @@ class Tile
       tileset[@type].draw_rot(@shape.body.p.x + x_offset, @shape.body.p.y + y_offset, 0, @shape.body.a.radians_to_gosu)
       #draw_polygon(x_offset, y_offset)
     end
+  end
+
+  def elast
+    0.8
+  end
+
+  def fric
+    0.5
   end
 end

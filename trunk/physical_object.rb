@@ -10,7 +10,9 @@ module PhysicalObject
     @shape = CP::Shape::Poly.new(body, @bounds, zero_vector)
     @shape.collision_type = collision_tag
     @shape.body.p = CP::Vec2.new(x,y)
-    @space.add_body(body)
+    @shape.e = elast if self.respond_to?("elast")
+    @shape.u = fric if self.respond_to?("fric")
+    @space.add_body(body) unless @fixed
     @space.add_shape(@shape)
   end
 
@@ -23,11 +25,11 @@ module PhysicalObject
     @bounds.each_cons(2) do |pair| 
       a = @shape.body.local2world(pair.first)
       b = @shape.body.local2world(pair[1])
-      @window.draw_line(a.x+offset_x, a.y+offset_y, 0xFFFFFFFF, b.x+offset_x, b.y+offset_y, 0xFFFFFFFF, z=0, mode=:default)
+      @window.draw_line(a.x+offset_x, a.y+offset_y, 0xFFFFFFFF, b.x+offset_x, b.y+offset_y, 0xFFFFFFFF, z=1, mode=:default)
     end
     a = @shape.body.local2world(@bounds.last)
     b = @shape.body.local2world(@bounds.first)
-    @window.draw_line(a.x+offset_x, a.y+offset_y, 0xFFFFFFFF, b.x+offset_x, b.y+offset_y, 0xFFFFFFFF, z=0, mode=:default)
+    @window.draw_line(a.x+offset_x, a.y+offset_y, 0xFFFFFFFF, b.x+offset_x, b.y+offset_y, 0xFFFFFFFF, z=1, mode=:default)
   end
 
 end
