@@ -33,4 +33,12 @@ class Particle
   def non_interactive!
     @shape.group=1
   end
+
+  def elast
+    0.5
+  end
+
+  def fric
+    0.3
+  end
 end
