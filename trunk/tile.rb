@@ -6,7 +6,9 @@ include PhysicalObject
 class Tile
   GRASS = 0
   EARTH = 1
+  FINISH = 0
   COLLISION_TAG = :tile
+  FINISH_TAG = :finish
   MASS = 1.0/0.0
 
   def initialize(window, space, x, y, type)
@@ -15,8 +17,18 @@ class Tile
     @space = space
     @type = GRASS if type == 'G'
     @type = EARTH if type == 'E'
-    @bounds = [CP::Vec2.new(30,30), CP::Vec2.new(30,-30), CP::Vec2.new(-30,-30), CP::Vec2.new(-30,30)]
-    create_pyhsical_object(x, y, MASS, COLLISION_TAG) if @type
+    @type = FINISH if type == 'F'
+    collision = COLLISION_TAG unless type == 'F'
+    collision = FINISH_TAG if type == 'F'
+    @bounds = [CP::Vec2.new(30.5,30.5), CP::Vec2.new(30.5,-30.5), CP::Vec2.new(-30.5,-30.5), CP::Vec2.new(-30.5,30.5)]
+    create_pyhsical_object(x, y, MASS, collision) if @type
+    add_finish_collision_function
+  end
+
+  def add_finish_collision_function
+    @space.add_collision_func(:balloon, :finish) do |balloon, finish|
+      exit #TODO hook this to the level clear animation.
+    end
   end
 
   def draw screen_x, screen_y, tileset
