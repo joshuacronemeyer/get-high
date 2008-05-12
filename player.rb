@@ -4,7 +4,7 @@ require 'map_reader'
 include PhysicalObject
 
 class Player
-  MASS = 1.0
+  MASS = 10.0
   COLLISION_TAG = :balloon
 
   def initialize(window, space, speed)
@@ -24,6 +24,10 @@ class Player
 
   def y
     @shape.body.p.y
+  end
+
+  def body
+    @shape.body
   end
   
   def increase_speed

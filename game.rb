@@ -1,9 +1,11 @@
+
 require 'rubygems'
 require 'gosu'
 require 'chipmunk'
 require 'map'
 require 'tile'
 require 'player'
+require 'rope'
 require 'mouse_pointer'
 require 'particle'
 require 'explosion'
@@ -12,7 +14,7 @@ include Gosu
 class Game < Window
   PHYSICS_TIME_DELTA = 1.0/20.0
   VISCOUS_DAMPING = 0.7
-  GRAVITY = 50
+  GRAVITY = 30
   X_RES = 640
   Y_RES = 480
 
@@ -22,7 +24,8 @@ class Game < Window
     @space = CP::Space.new
     @space.damping = VISCOUS_DAMPING
     @space.gravity = CP::Vec2.new(0,GRAVITY)
-    @player = Player.new(self, @space, CP::Vec2.new(0,-GRAVITY - 20))
+    @player = Player.new(self, @space, CP::Vec2.new(0,-GRAVITY - 600))
+    @rope = Rope.new(self, @space, @player.body)
     @map = Map.new(self, @space, "media/map.txt")
     @pointer = MousePointer.new(self)
     @particle_image = Image.new(self, "media/red_particle.png", true)
@@ -42,6 +45,7 @@ end
   def draw
     @map.draw @player.x, @player.y
     @player.draw
+    @rope.draw @player.x, @player.y
     @pointer.draw
     @explosion.draw(@player.x, @player.y, @particle_image) if @explosion
   end
